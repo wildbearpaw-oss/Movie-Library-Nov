@@ -22,32 +22,28 @@ def load_data():
         messagebox.showerror("Ошибка", f"Ошибка загрузки данных: {e}")
         movies = []
 
-def save_data():
-    """Сохранение данных в JSON файл"""
+def save_data():    """Сохранение данных в JSON файл"""
     try:
         with open(data_file, 'w', encoding='utf-8') as f:
             json.dump(movies, f, ensure_ascii=False, indent=2)
     except Exception as e:
         messagebox.showerror("Ошибка", f"Ошибка сохранения данных: {e}")
 
-def validate_year(year):
-    """Проверка корректности года (1900–2026)"""
+def validate_year(year):    """Проверка корректности года (1900–2026)"""
     try:
         year_num = int(year)
         return 1900 <= year_num <= 2026
     except ValueError:
         return False
 
-def validate_rating(rating):
-    """Проверка корректности рейтинга (0–10)"""
+def validate_rating(rating):    """Проверка корректности рейтинга (0–10)"""
     try:
         rating_num = float(rating)
         return 0 <= rating_num <= 10
     except ValueError:
         return False
 
-def refresh_table():
-    """Обновление таблицы с учётом фильтрации"""
+def refresh_table():    """Обновление таблицы с учётом фильтрации"""
     filtered = filter_movies()
     for item in tree.get_children():
         tree.delete(item)
@@ -59,13 +55,11 @@ def refresh_table():
             f"{movie['rating']:.1f}"
         ))
 
-def filter_movies():
-    """Фильтрация фильмов по жанру и году"""
+def filter_movies():    """Фильтрация фильмов по жанру и году"""
     global current_filter_genre, current_filter_year
 
     filtered = movies.copy()
-
-    # Фильтр по жанру (частичное совпадение, регистронезависимо)
+# Фильтр по жанру (частичное совпадение, регистронезависимо)
     if current_filter_genre:
         filtered = [m for m in filtered if current_filter_genre.lower() in m["genre"].lower()]
 
